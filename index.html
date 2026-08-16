@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="badge-pill">
+            <span class="dot">•</span> OFFICIAL HIRONO RETAILER • CAMBODIA
+          </div>
+          <h1 class="hero-title">
+            Discover <br />
+            <span class="highlight-text">Your Next</span>
+            <span class="dot-pink">•</span><br />
+            Companion
+          </h1>
+          <p class="hero-desc">
+            Cambodia's premier destination for authentic Hirono Pop Mart
+            collectibles — figures, plush dolls, and accessories for every
+            collector.
+          </p>
+          <div class="hero-buttons">
+            <a href="products.html" class="btn-primary">Shop Now</a>
+            <a href="features.html" class="btn-secondary">Learn More</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <h3>12+</h3>
+              <p>COLLECTIONS</p>
+            </div>
+            <div class="stat-item">
+              <h3>140+</h3>
+              <p>PRODUCTS</p>
+            </div>
+            <div class="stat-item">
+              <h3>100%</h3>
+              <p>AUTHENTIC</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image-wrapper">
+          <div class="new-drop-badge">NEW DROP 🎁</div>
+          <div class="hero-card">
+            <img src="images/hero1.png" alt="Latest Collection" />
+            <div class="hero-card-overlay">
+              <div>
+                <h4>Latest Collection</h4>
+                <p>Mist Walker Series · 2026</p>
+              </div>
+              <a href="products.html" class="btn-explore">Explore &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POPULAR PICKS -->
+    <section class="products-section white-bg" id="products">
+      <div class="section-container">
+        <div class="section-header">
+          <div>
+            <span class="section-subtitle">FAN FAVORITES</span>
+            <h2 class="section-title">Popular Picks</h2>
+          </div>
+          <a href="products.html" class="view-all">View all &rarr;</a>
+        </div>
+
+        <div class="product-grid" id="popular-picks-grid">
+          <!-- Rendered dynamically by home.js from the shared product store -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FRESHLY DROPPED -->
+    <section class="products-section soft-pink-bg">
+      <div class="section-container">
+        <div class="section-header">
+          <div>
+            <span class="section-subtitle">JUST ARRIVED</span>
+            <h2 class="section-title">Freshly Dropped</h2>
+          </div>
+          <a href="products.html" class="view-all">View all &rarr;</a>
+        </div>
+
+        <div class="product-grid" id="new-arrivals-grid">
+          <!-- Rendered dynamically by home.js from the shared product store -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP BY CATEGORY -->
+    <section class="category-section dark-bg">
+      <div class="section-container">
+        <div class="text-center">
+          <span class="section-subtitle">EXPLORE</span>
+          <h2 class="section-title text-white">Shop by Category</h2>
+        </div>
+
+        <div class="category-grid">
+          <!-- Cat 1 -->
+          <div
+            class="category-card"
+            style="
+              background-image: url('images/hirono-plush-doll/Hirono-Road-Journal/grey-gravel.webp');
+            "
+          >
+            <span class="category-dot pink-dot"></span>
+            <div class="category-content">
+              <h3>Plush Dolls</h3>
+              <p>Soft cuddly companions</p>
+              <span class="item-count">7 items</span>
+            </div>
+          </div>
+
+          <!-- Cat 2 -->
+          <div
+            class="category-card"
+            style="
+              background-image: url('images/hirono-figures/hirono-echo/breakout-plan.webp');
+            "
+          >
+            <span class="category-dot purple-dot"></span>
+            <div class="category-content">
+              <h3>Figures</h3>
+              <p>Collectible vinyl & resin figures</p>
+              <span class="item-count">3 items</span>
+            </div>
+          </div>
+
+          <!-- Cat 3 -->
+          <div
+            class="category-card"
+            style="
+              background-image: url('images/hirono-accessories/hirono-monster-carnival-figure-scene-prop.webp');
+            "
+          >
+            <span class="category-dot yellow-dot"></span>
+            <div class="category-content">
+              <h3>Accessories</h3>
+              <p>Cup, Phone Case & more</p>
+              <span class="item-count">2 items</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section white-bg" id="features">
+      <div class="section-container">
+        <div class="text-center">
+          <span class="section-subtitle">WHY CHOOSE US</span>
+          <h2 class="section-title">The Hirono Difference</h2>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon pink-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3>100% Authentic</h3>
+            <p>
+              Every product is officially licensed by Pop Mart. Guaranteed
+              genuine — no fakes, no replicas, ever.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon yellow-icon">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h3>Fast Delivery</h3>
+            <p>
+              Cambodia-wide delivery in 1–3 business days via VET Express and
+              J&T. Your collectibles arrive safe.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon purple-icon">
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <h3>Exclusive Drops</h3>
+            <p>
+              First access to limited edition Hirono colorways and exclusive
+              Cambodia-only releases. Join the waitlist.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon green-icon">
+              <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h3>Secure Payments</h3>
+            <p>
+              Pay with ABA Bank, ACLEDA Bank, or cash on delivery. Your
+              transactions are always safe and easy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section class="about-section soft-pink-bg" id="about">
+      <div class="section-container about-wrapper">
+        <div class="about-text">
+          <span class="section-subtitle">OUR STORY</span>
+          <h2 class="section-title">About Hirono Cambodia</h2>
+          <p>
+            Born from a passion for collecting and a love of the Hirono
+            character, Hirono Cambodia was founded in 2022 by a group of
+            dedicated Pop Mart enthusiasts in Phnom Penh.
+          </p>
+
+          <div class="about-stats">
+            <div>
+              <h3>2022</h3>
+              <p>FOUNDED</p>
+            </div>
+            <div>
+              <h3>144+</h3>
+              <p>HAPPY PRODUCTS</p>
+            </div>
+            <div>
+              <h3>100%</h3>
+              <p>AUTHENTIC</p>
+            </div>
+          </div>
+
+          <button class="btn-dark">
+            <a href="contact.html">Get in Touch</a>
+          </button>
+        </div>
+
+        <div class="about-image-container">
+          <img src="images/hero4.jpg" alt="About Hirono Cambodia" />
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <h2>Ready to Start Collecting?</h2>
+        <p>
+          Browse our full collection of authentic Hirono figures, plush dolls,
+          and accessories.
+        </p>
+        <a href="products.html" class="btn-white">Shop All Products</a>
+      </div>
+    </section>
+
+    <!-- CUSTOM NOTIFICATION DIALOG -->
+    <div id="cart-dialog-overlay" class="dialog-overlay">
+      <div class="dialog-box">
+        <div class="dialog-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3>Added to Cart!</h3>
+        <p id="dialog-message">Product has been added to your cart.</p>
+        <button id="dialog-close-btn" class="dialog-btn">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer-placeholder"></div>
+
+    <!-- MAIN HOMEPAGE JS -->
+    <script src="products-data.js"></script>
+    <script src="product-store.js"></script>
+    <script src="components.js"></script>
+    <script src="home.js"></script>
+  </body>
+</html>

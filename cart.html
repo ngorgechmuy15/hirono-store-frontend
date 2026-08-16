@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="cart.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- CART HERO BANNER -->
+    <section class="cart-hero dark-bg">
+      <div class="cart-hero-container">
+        <span class="section-subtitle">YOUR</span>
+        <h1 class="cart-hero-title">Shopping Cart</h1>
+      </div>
+    </section>
+
+    <!-- CART CONTENT / EMPTY STATE -->
+    <section class="cart-content-section soft-pink-bg">
+      <div class="empty-cart-card">
+        <div class="cart-icon-wrapper">
+          <i class="fa-solid fa-cart-shopping cart-illustration"></i>
+        </div>
+        <h2 class="empty-title">Your cart is empty</h2>
+        <p class="empty-subtitle">Start adding some Hirono collectibles!</p>
+        <a href="products.html" class="btn-browse-products">Browse Products</a>
+      </div>
+    </section>
+
+    <!-- CUSTOM CLEAR CART CONFIRMATION DIALOG -->
+    <div id="clear-cart-dialog" class="dialog-overlay">
+      <div class="dialog-box">
+        <div class="dialog-icon warning-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3>Clear Shopping Cart?</h3>
+        <p>
+          Are you sure you want to remove all items from your cart? This action
+          cannot be undone.
+        </p>
+        <div class="dialog-actions">
+          <button id="cancel-clear-btn" class="dialog-btn btn-secondary-modal">
+            Cancel
+          </button>
+          <button id="confirm-clear-btn" class="dialog-btn btn-danger-modal">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. CHECKOUT MODAL DIALOG -->
+    <div id="checkout-modal" class="dialog-overlay">
+      <div class="dialog-box checkout-box">
+        <div class="modal-header">
+          <h2>Order Summary</h2>
+          <span class="close-modal-x" id="close-checkout-x">&times;</span>
+        </div>
+
+        <!-- Items Summary List -->
+        <div id="checkout-items-list" class="checkout-items-list">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <div class="checkout-options-grid">
+          <!-- Payment Method Selection -->
+          <div class="option-group">
+            <label class="option-label"
+              ><i class="fa-solid fa-credit-card"></i> Payment Method</label
+            >
+            <div class="radio-tiles">
+              <label class="tile-option">
+                <input type="radio" name="payment_method" value="ABA" />
+                <span class="tile-btn"
+                  ><i class="fa-solid fa-qrcode"></i> ABA</span
+                >
+              </label>
+              <label class="tile-option">
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="Cash"
+                  checked
+                />
+                <span class="tile-btn"
+                  ><i class="fa-solid fa-money-bill-wave"></i> Cash</span
+                >
+              </label>
+              <label class="tile-option">
+                <input type="radio" name="payment_method" value="ACLEDA" />
+                <span class="tile-btn"
+                  ><i class="fa-solid fa-qrcode"></i> ACLEDA</span
+                >
+              </label>
+            </div>
+
+            <!-- QR Payment Box: shown only when ABA or ACLEDA is selected -->
+            <div id="payment-qr-box" class="payment-qr-box" style="display: none;">
+              <img id="payment-qr-img" src="images/abaqr.JPG" alt="Payment QR code" class="payment-qr-img" />
+              <p class="payment-qr-caption">
+                Scan this QR code with your <span id="payment-qr-bank-name">bank</span> app to pay
+                <strong id="payment-qr-amount">$0.00</strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- Delivery Method Selection -->
+          <div class="option-group">
+            <label class="option-label"
+              ><i class="fa-solid fa-truck-fast"></i> Delivery Method</label
+            >
+            <div class="radio-tiles">
+              <label class="tile-option">
+                <input
+                  type="radio"
+                  name="delivery_method"
+                  value="VET"
+                  checked
+                />
+                <span class="tile-btn"
+                  ><i class="fa-solid fa-bus"></i> VET</span
+                >
+              </label>
+              <label class="tile-option">
+                <input type="radio" name="delivery_method" value="J&T" />
+                <span class="tile-btn"
+                  ><i class="fa-solid fa-box-open"></i> J&T</span
+                >
+              </label>
+              <label class="tile-option">
+                <input type="radio" name="delivery_method" value="Pick up" />
+                <span class="tile-btn"
+                  ><i class="fa-solid fa-store"></i> Pick up</span
+                >
+              </label>
+            </div>
+
+            <!-- Delivery Details: shown only for VET / J&T (not needed for Pick up) -->
+            <div id="delivery-details-box" class="delivery-details-box">
+              <div class="delivery-details-row">
+                <div class="form-group-inline">
+                  <label for="delivery-location">DELIVERY LOCATION</label>
+                  <input
+                    type="text"
+                    id="delivery-location"
+                    placeholder="e.g. Street 210, Phnom Penh"
+                  />
+                </div>
+                <div class="form-group-inline">
+                  <label for="delivery-phone">PHONE NUMBER</label>
+                  <input
+                    type="tel"
+                    id="delivery-phone"
+                    placeholder="012 345 678"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkout Totals Breakdown -->
+        <div class="checkout-totals-breakdown">
+          <div class="totals-row">
+            <span>Subtotal</span>
+            <span id="checkout-subtotal-price">$0.00</span>
+          </div>
+          <div class="totals-row">
+            <span id="checkout-delivery-label">Delivery</span>
+            <span id="checkout-delivery-price">$0.00</span>
+          </div>
+          <div class="modal-total-row">
+            <span>Total Amount:</span>
+            <span id="checkout-total-price" class="modal-total-price">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="dialog-actions">
+          <button id="checkout-back-btn" class="dialog-btn btn-secondary-modal">
+            Back
+          </button>
+          <button
+            id="checkout-continue-btn"
+            class="dialog-btn btn-primary-modal"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. RECEIPT MODAL DIALOG -->
+    <div id="receipt-modal" class="dialog-overlay">
+      <div class="dialog-box receipt-box" id="printable-receipt">
+        <div class="receipt-header">
+          <div class="receipt-logo">Hirono <span>Cambodia</span></div>
+          <p class="receipt-subtitle">Official Purchase Receipt</p>
+          <span class="receipt-date" id="receipt-date">Date: --</span>
+        </div>
+
+        <hr class="receipt-divider" />
+
+        <div class="receipt-details">
+          <p>
+            <strong>Payment:</strong> <span id="receipt-payment">Cash</span>
+          </p>
+          <p>
+            <strong>Delivery:</strong> <span id="receipt-delivery">VET</span>
+          </p>
+        </div>
+        <p class="receipt-deliver-to" id="receipt-deliver-to" style="display: none;"></p>
+
+        <div id="receipt-items-list" class="receipt-items-list">
+          <!-- Dynamically populated -->
+        </div>
+
+        <hr class="receipt-divider" />
+
+        <div class="receipt-breakdown-row">
+          <span>Subtotal</span>
+          <span id="receipt-subtotal">$0.00</span>
+        </div>
+        <div class="receipt-breakdown-row">
+          <span id="receipt-delivery-label">Delivery</span>
+          <span id="receipt-delivery-fee">$0.00</span>
+        </div>
+
+        <div class="receipt-total-row">
+          <span>TOTAL PAID</span>
+          <span id="receipt-total" class="receipt-grand-total">$0.00</span>
+        </div>
+
+        <div class="dialog-actions receipt-actions">
+          <button id="receipt-close-btn" class="dialog-btn btn-secondary-modal">
+            Close
+          </button>
+          <button
+            id="receipt-download-btn"
+            class="dialog-btn btn-primary-modal"
+          >
+            <i class="fa-solid fa-download"></i> Download Receipt
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FOOTER PLACEHOLDER -->
+    <div id="footer-placeholder"></div>
+
+    <!-- SCRIPTS LOADED AT BOTTOM -->
+    <script src="components.js"></script>
+    <script src="cart.js"></script>
+  </body>
+</html>

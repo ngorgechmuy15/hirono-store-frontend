@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Colors */
+:root {
+  --pink-primary: #ff2b6d;
+  --pink-hover: #e01e5a;
+  --red: #fc1111;
+  --red-hover: #931010;
+  --pink-soft: #fff0f5;
+  --purple-dark: #1e072a;
+  --purple-accent: #7c3aed;
+  --yellow-accent: #facc15;
+  --gray-bg: #fafafa;
+  --text-dark: #111827;
+  --text-muted: #6b7280;
+  --background-color: #f0f1f2;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-dark);
+}
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* MAIN CONTENT STYLES */
+.main-content {
+  flex: 1;
+  padding: 40px;
+}
+
+.page-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.page-header p {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-top: 4px;
+  margin-bottom: 28px;
+}
+
+/* TABLE STYLES */
+.table-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  background-color:var(--purple-dark);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding: 16px 20px;
+}
+
+.orders-table td {
+  padding: 60px 20px;
+  vertical-align: middle;
+}
+
+.no-data {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+}
+/* DATA ROWS (override the big empty-state padding for actual rows) */
+.orders-table td.data-cell {
+  padding: 16px 20px;
+  font-size: 14px;
+}
+
+.font-bold {
+  font-weight: 700;
+  color: #111827;
+}
+
+.text-muted {
+  color: #6b7280;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.badge-pending {
+  background-color: #fef9e7;
+  color: #a16207;
+}
+
+.badge-processing {
+  background-color: #eef2ff;
+  color: #4338ca;
+}
+
+.badge-shipped {
+  background-color: #eef6ff;
+  color: #1d4ed8;
+}
+
+.badge-completed {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+
+.badge-cancelled {
+  background-color: #fde8e8;
+  color: #dc2626;
+}
+
+.status-select {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+}

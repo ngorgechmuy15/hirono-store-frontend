@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account - Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="account.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- ACCOUNT HEADER BANNER -->
+    <section class="account-banner">
+      <div class="account-banner-content">
+        <div class="large-avatar-badge" id="banner-avatar">-</div>
+        <div class="account-banner-info">
+          <span class="badge-subtitle">MY ACCOUNT</span>
+          <h1 id="banner-fullname">Loading...</h1>
+          <p id="banner-email">...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCOUNT CONTENT -->
+    <main class="account-container">
+      <!-- PROFILE INFORMATION CARD -->
+      <div class="account-card">
+        <div class="card-header">
+          <h2>Profile Information</h2>
+          <button id="account-edit-btn" class="btn-outline-edit">
+            Edit Profile
+          </button>
+        </div>
+        <div class="profile-grid">
+          <div class="info-box">
+            <i class="fa-solid fa-user info-icon"></i>
+            <div>
+              <label>FULL NAME</label>
+              <p id="info-fullname">-</p>
+            </div>
+          </div>
+          <div class="info-box">
+            <i class="fa-solid fa-envelope info-icon"></i>
+            <div>
+              <label>EMAIL ADDRESS</label>
+              <p id="info-email">-</p>
+            </div>
+          </div>
+          <div class="info-box">
+            <i class="fa-solid fa-phone info-icon"></i>
+            <div>
+              <label>PHONE NUMBER</label>
+              <p id="info-phone">-</p>
+            </div>
+          </div>
+          <div class="info-box">
+            <i class="fa-solid fa-location-dot info-icon"></i>
+            <div>
+              <label>LOCATION</label>
+              <p id="info-location">-</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PURCHASE HISTORY CARD -->
+      <div class="account-card">
+        <div class="card-header-sub">
+          <h2>Purchase History</h2>
+          <p class="sub-text">0 orders placed</p>
+        </div>
+        <div class="empty-history-state">
+          <div class="box-icon">📦</div>
+          <h3>No purchase history yet</h3>
+          <p>Your orders will appear here after your first purchase.</p>
+          <a href="products.html" class="btn-primary-pink">Browse Products</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div id="edit-profile-modal" class="dialog-overlay" style="display: none;">
+      <div class="dialog-card" style="text-align: left; max-width: 420px; width: 90%;">
+        <h3 style="margin-bottom: 15px; font-size: 1.25rem;">Edit Profile</h3>
+        <form id="edit-profile-form">
+          <div style="margin-bottom: 12px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #666; display: block; margin-bottom: 4px;">FULL NAME</label>
+            <input type="text" id="edit-fullname" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;" required />
+          </div>
+          <div style="margin-bottom: 12px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #666; display: block; margin-bottom: 4px;">PHONE NUMBER</label>
+            <input type="tel" id="edit-phone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;" required />
+          </div>
+          <div style="margin-bottom: 18px;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #666; display: block; margin-bottom: 4px;">LOCATION</label>
+            <input type="text" id="edit-location" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;" required />
+          </div>
+          <div class="dialog-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" id="close-edit-modal" class="btn-dialog-secondary">Cancel</button>
+            <button type="submit" class="btn-dialog-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SCRIPTS LOADED AT BOTTOM -->
+    <script src="customer-store.js"></script>
+    <script src="components.js"></script>
+    <script src="account.js"></script>
+  </body>
+</html>

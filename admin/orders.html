@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orders - Hirono Cambodia Admin</title>
+  <link rel="stylesheet" href="orders.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" 
+    rel="stylesheet"
+  />
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+  />
+</head>
+<body>
+  <div class="admin-container">
+    <!-- SIDEBAR PLACEHOLDER -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- HEADER -->
+      <header class="page-header">
+        <h1>Orders</h1>
+        <p id="orders-subtitle">0 total orders</p>
+      </header>
+
+      <!-- ORDERS TABLE CARD -->
+      <section class="orders-section">
+        <div class="table-card">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>ORDER ID</th>
+                <th>CUSTOMER EMAIL</th>
+                <th>TOTAL AMOUNT</th>
+                <th>PAYMENT METHOD</th>
+                <th>DELIVERY METHOD</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <tr>
+                <td colspan="7" class="no-data">Loading orders&hellip;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- LOAD SIDEBAR JS -->
+  <script src="sidebar.js"></script>
+  <script src="orders.js"></script>
+</body>
+</html>

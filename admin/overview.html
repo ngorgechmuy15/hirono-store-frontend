@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview - Hirono Cambodia Admin</title>
+  <link rel="stylesheet" href="overview.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" 
+    rel="stylesheet"
+  />
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+  />
+</head>
+<body>
+  <div class="admin-container">
+    <!-- SIDEBAR PLACEHOLDER -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- HEADER -->
+      <header class="page-header">
+        <h1>Overview</h1>
+        <p>Welcome back, Administrator</p>
+      </header>
+
+      <!-- METRICS GRID -->
+      <section class="metrics-grid">
+        <div class="metric-card">
+          <div class="icon-box box-pink">
+            <i class="fa-solid fa-cube"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">PRODUCTS IN STOCK</span>
+            <span class="metric-value" id="metric-products">0</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="icon-box box-yellow">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">TOTAL ORDERS</span>
+            <span class="metric-value" id="metric-orders">0</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="icon-box box-green">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">TOTAL REVENUE</span>
+            <span class="metric-value" id="metric-revenue">$0.00</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="icon-box box-purple">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="metric-info">
+            <span class="metric-title">REGISTERED CUSTOMERS</span>
+            <span class="metric-value" id="metric-customers">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECENT PURCHASES -->
+      <section class="purchases-section">
+        <h3>Recent Purchases</h3>
+        <div class="table-card">
+          <table class="purchases-table">
+            <thead>
+              <tr>
+                <th>CUSTOMER EMAIL</th>
+                <th>ORDER ID</th>
+                <th>TOTAL</th>
+                <th>PAYMENT</th>
+                <th>DELIVERY</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="recent-purchases-body">
+              <tr>
+                <td colspan="6" class="no-data">Loading&hellip;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- LOAD SIDEBAR JS (REQUIRED) -->
+  <script src="../products-data.js"></script>
+  <script src="../product-store.js"></script>
+  <script src="../customer-store.js"></script>
+  <script src="sidebar.js"></script>
+  <script src="overview.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Management - Hirono Cambodia Admin</title>
+  <link rel="stylesheet" href="customermanagement.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" 
+    rel="stylesheet"
+  />
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+  />
+</head>
+<body>
+  <div class="admin-container">
+    <!-- SIDEBAR PLACEHOLDER -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- HEADER -->
+      <header class="page-header">
+        <h1>Customer Management</h1>
+        <p id="customers-subtitle">0 registered customers</p>
+      </header>
+
+      <!-- CUSTOMER TABLE CARD -->
+      <section class="customers-section">
+        <div class="table-card">
+          <table class="customers-table">
+            <thead>
+              <tr>
+                <th>FULL NAME</th>
+                <th>EMAIL</th>
+                <th>PHONE NUMBER</th>
+                <th>LOCATION</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-body">
+              <tr>
+                <td colspan="6" class="no-data">Loading customers&hellip;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../customer-store.js"></script>
+  <script src="sidebar.js"></script>
+  <script src="customermanagement.js"></script>
+</body>
+</html>

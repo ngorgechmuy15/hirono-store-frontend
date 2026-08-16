@@ -1,0 +1,376 @@
+/* =========================================
+   LOGIN PAGE SPECIFIC STYLES
+   ========================================= */
+
+/* Main Split Container */
+.login-page-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+}
+
+/* LEFT PANEL (Dark Brand & Stats Area) */
+.login-left-panel {
+  position: relative;
+  background-color: #120310;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  overflow: hidden;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.08) 1.5px,
+    transparent 1.5px
+  );
+  background-size: 24px 24px;
+}
+
+/* Decorative Background Elements */
+.decorated-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.circle-top-right {
+  width: 260px;
+  height: 260px;
+  border: 3px solid rgba(255, 43, 109, 0.2);
+  top: -40px;
+  right: -50px;
+}
+
+.circle-bottom-left {
+  width: 150px;
+  height: 150px;
+  background-color: rgba(255, 255, 255, 0.03);
+  bottom: -30px;
+  left: -40px;
+}
+
+/* Left Panel Content */
+.brand-hero-content {
+  text-align: center;
+  max-width: 440px;
+  z-index: 2;
+}
+
+.brand-badge-large {
+  width: 64px;
+  height: 64px;
+  background-color: #ff2b6d;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.8rem;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 25px rgba(255, 43, 109, 0.4);
+}
+
+.brand-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.brand-subtitle {
+  color: #9ca3af;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* Stats Row */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+
+.stat-number {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ff2b6d;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* RIGHT PANEL (Form Area) */
+.login-right-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  background-color: #fdf5f7;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Tab Switcher Pills */
+.tab-switcher {
+  background-color: #eae6ed;
+  padding: 4px;
+  border-radius: 14px;
+  display: flex;
+  margin-bottom: 36px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background-color: #ffffff;
+  color: #ff2b6d;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Styles */
+.form-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.form-subtext {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 32px;
+}
+
+/* Two column layout for Phone & Location */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #fff8f9;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #1f2937;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.auth-form input::placeholder {
+  color: #9ca3af;
+}
+
+.auth-form input:focus {
+  background-color: #ffffff;
+  border-color: #ff2b6d;
+  box-shadow: 0 0 0 4px rgba(255, 43, 109, 0.1);
+}
+
+.btn-submit-auth {
+  width: 100%;
+  background-color: #ff2b6d;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: 0 8px 20px rgba(255, 43, 109, 0.25);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.btn-submit-auth:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.toggle-footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 24px;
+}
+
+.toggle-footer a {
+  color: #ff2b6d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.toggle-footer a:hover {
+  text-decoration: underline;
+}
+/* =========================================
+   DIALOG / MODAL OVERLAY STYLES
+   ========================================= */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1; /* index.css sets .dialog-overlay opacity:0/visibility:hidden for its .active-class toggle system — login.js shows/hides this one via style.display instead, so it must be forced visible here or it opens invisibly */
+  visibility: visible;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dialog-card {
+  background: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  padding: 32px 24px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #ffe4e9;
+  color: #ff2b6d;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.dialog-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.dialog-card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-dialog-primary {
+  width: 100%;
+  background-color: #ff2b6d;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-dialog-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-dialog-secondary {
+  width: 100%;
+  background-color: transparent;
+  color: #6b7280;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.btn-dialog-secondary:hover {
+  color: #1f2937;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .login-page-container {
+    grid-template-columns: 1fr;
+  }
+  .login-left-panel {
+    padding: 40px 20px;
+  }
+  .brand-title {
+    font-size: 2.2rem;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

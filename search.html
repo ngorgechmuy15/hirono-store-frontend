@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search - Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="search.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- BACKGROUND LANDING PAGE (Blurred) -->
+    <div class="page-backdrop blurred">
+      <!-- Navbar -->
+      <header class="navbar">
+        <div class="nav-container">
+          <div class="logo">
+            <span class="logo-text">Hirono <span>Cambodia</span></span>
+          </div>
+          <nav class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="features.html">Features</a>
+            <a href="products.html">Products</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+          <div class="nav-actions">
+            <button class="icon-btn">
+              <a href="search.html"
+                ><i class="fa-solid fa-magnifying-glass"> </i
+              ></a>
+            </button>
+            <button class="icon-btn">
+              <a href="cart.html" class="nav-cart-link">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="cart-badge" class="cart-badge">0</span>
+              </a>
+            </button>
+            <button class="btn-login"><a href="login.html">Login</a></button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Background Hero Visual -->
+      <section class="hero-bg-content dark-bg">
+        <div class="hero-text-side">
+          <span class="badge-tag">CAMBODIA'S PREMIER HIRONO STORE</span>
+          <h1>
+            Discover <br /><span class="pink-highlight">Your Next</span>
+            <br />Companion
+          </h1>
+          <p>
+            Explore official vinyl figures, plush collectibles, and
+            limited-edition blind boxes. Crafted for those who appreciate the
+            extra special.
+          </p>
+          <div class="hero-btns">
+            <button class="btn-primary">Shop Now</button>
+            <button class="btn-secondary">Learn More</button>
+          </div>
+        </div>
+        <div class="hero-image-side">
+          <div class="image-box-placeholder"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEARCH OVERLAY & MODAL -->
+    <div class="search-modal-overlay">
+      <div class="search-modal-card">
+        <!-- Input Header -->
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <!-- Matches JS searchInput id -->
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products, collections, types..."
+            autofocus
+          />
+          <a
+            href="index.html"
+            class="close-search-btn"
+            aria-label="Close search"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </a>
+        </div>
+
+        <!-- Search Content Body with ID added -->
+        <div class="search-modal-body" id="search-results">
+          <p class="search-placeholder-text">
+            Start typing to search any products
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="products-data.js"></script>
+    <script src="product-store.js"></script>
+    <script src="components.js"></script>
+    <script src="search.js"></script>
+  </body>
+</html>

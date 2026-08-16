@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="contact.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- CONTACT HERO BANNER -->
+    <section class="contact-hero dark-bg text-center">
+      <div class="hero-container-center">
+        <span class="section-subtitle">GET IN TOUCH</span>
+        <h1 class="contact-title">Contact Us</h1>
+        <p class="hero-desc center-desc">We'd love to hear from you</p>
+      </div>
+    </section>
+
+    <!-- MAIN CONTACT SECTION -->
+    <section class="contact-section soft-pink-bg">
+      <div class="section-container contact-grid">
+        <!-- Left Column: Contact Info Cards -->
+        <div class="contact-info-col">
+          <span class="section-subtitle">CONTACT INFO</span>
+          <h2 class="section-title">We're Here to Help</h2>
+          <p class="contact-intro">
+            Have a question about your order, a product, or just want to chat
+            about Hirono? Our team is available Monday–Saturday, 9AM–6PM.
+          </p>
+
+          <div class="info-cards-list">
+            <!-- Address Card -->
+            <div class="info-item-card">
+              <div class="icon-circle">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">ADDRESS</span>
+                <p class="info-val">Street 310, BKK1, Phnom Penh, Cambodia</p>
+              </div>
+            </div>
+
+            <!-- Email Card -->
+            <div class="info-item-card">
+              <div class="icon-circle">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">EMAIL</span>
+                <p class="info-val">retail@hironokh.com</p>
+              </div>
+            </div>
+
+            <!-- Phone Card -->
+            <div class="info-item-card">
+              <div class="icon-circle">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">PHONE</span>
+                <p class="info-val">+855 96 765 5334</p>
+              </div>
+            </div>
+
+            <!-- Hours Card -->
+            <div class="info-item-card">
+              <div class="icon-circle">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div class="info-text">
+                <span class="info-label">HOURS</span>
+                <p class="info-val">Mon–Sat: 9AM – 6PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Contact Form -->
+        <div class="contact-form-card">
+          <h2>Send a Message</h2>
+          <form action="#" method="POST" id="contact-form">
+            <div class="form-row-two">
+              <div class="form-group">
+                <label>FULL NAME</label>
+                <input type="text" id="contact-name" placeholder="Gechmuy Ngor" required />
+              </div>
+              <div class="form-group">
+                <label>EMAIL</label>
+                <input
+                  type="email"
+                  id="contact-email"
+                  placeholder="gechmuy@example.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>SUBJECT</label>
+              <input
+                type="text"
+                id="contact-subject"
+                placeholder="Order inquiry, product question, etc."
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>MESSAGE</label>
+              <textarea
+                id="contact-message"
+                rows="5"
+                placeholder="Write your message here..."
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit-message">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- MESSAGE SENT CONFIRMATION DIALOG -->
+    <div id="cart-dialog-overlay" class="dialog-overlay">
+      <div class="dialog-box">
+        <div class="dialog-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3>Message Sent!</h3>
+        <p id="dialog-message">Thanks for reaching out — we'll get back to you soon.</p>
+        <button id="dialog-close-btn" class="dialog-btn">
+          Okay
+        </button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer-placeholder"></div>
+
+    <!-- SCRIPTS LOADED AT BOTTOM -->
+    <script src="components.js"></script>
+    <script src="contact.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="products.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- PRODUCTS HERO BANNER -->
+    <section class="products-hero dark-bg">
+      <div class="section-container">
+        <span class="section-subtitle">COLLECTIONS</span>
+        <h1 class="products-title">All Products</h1>
+        <p class="items-count">144+ items found</p>
+      </div>
+    </section>
+
+    <!-- FILTER & PRODUCTS SECTION -->
+    <section class="products-section soft-pink-bg">
+      <div class="section-container">
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-pills">
+            <button class="filter-pill active">All</button>
+            <button class="filter-pill">New Arrivals</button>
+            <button class="filter-pill">Figures</button>
+            <button class="filter-pill">Plush Dolls</button>
+            <button class="filter-pill">Accessories</button>
+          </div>
+          <div class="sort-dropdown-container">
+            <select class="sort-select">
+              <option value="default">Default</option>
+              <option value="echo">Hirono Echo</option>
+              <option value="le-petit-prince">Hirono Le Petit Prince</option>
+              <option value="little-mischief">Hirono Little Mischief</option>
+              <option value="mist-walker">Hirono Mist Walker</option>
+              <option value="mime">Hirono Mime</option>
+              <option value="monster's carnival">
+                Hirono Monster's Carnival
+              </option>
+              <option value="reshape">Hirono Reshape</option>
+              <option value="road-journal">Hirono Road Journal</option>
+              <option value="shelter">Hirono Shelter</option>
+              <option value="tamed-wildgrass">Hirono Tamed Wildgrass</option>
+              <option value="the-other-one">Hirono The Other One</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid">
+        </div>
+
+        <!-- Pagination is now built dynamically by products.js (getItemsPerPage
+             splits the current result set into 3 pages), so no static markup is needed here. -->
+      </div>
+    </section>
+
+    <!-- CUSTOM NOTIFICATION DIALOG -->
+    <div id="cart-dialog-overlay" class="dialog-overlay">
+      <div class="dialog-box">
+        <div class="dialog-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3>Added to Cart!</h3>
+        <p id="dialog-message">Product has been added to your cart.</p>
+        <button id="dialog-close-btn" class="dialog-btn">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer-placeholder"></div>
+
+    <!-- SCRIPTS LOADED AT BOTTOM -->
+    <script src="products-data.js"></script>
+    <script src="product-store.js"></script>
+    <script src="components.js"></script>
+    <script src="products.js"></script>
+    <script src="product-catalog.js"></script>
+  </body>
+</html>

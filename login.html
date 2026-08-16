@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Hirono Cambodia</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="login.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- NAVBAR PLACEHOLDER -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- SPLIT LOGIN SECTION -->
+    <main class="login-page-container">
+      <!-- LEFT SIDE: BRAND & STATS PANEL -->
+      <div class="login-left-panel dark-bg">
+        <div class="decorated-circle circle-top-right"></div>
+        <div class="decorated-circle circle-bottom-left"></div>
+
+        <div class="brand-hero-content">
+          <div class="brand-badge-large">H</div>
+          <h1 class="brand-title">Hirono Cambodia</h1>
+          <p class="brand-subtitle">
+            Join thousands of collectors and discover Cambodia's largest
+            authentic Hirono collection.
+          </p>
+
+          <div class="stats-container">
+            <div class="stat-card">
+              <span class="stat-number">12+</span>
+              <span class="stat-label">Collection</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">140+</span>
+              <span class="stat-label">Products</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Authentic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: FORM PANEL -->
+      <div class="login-right-panel soft-pink-bg">
+        <div class="form-wrapper" style="position: relative; z-index: 100;">
+          <!-- Tab Switcher -->
+          <div class="tab-switcher">
+            <button type="button" class="tab-btn" id="tab-signin">Sign In</button>
+            <button type="button" class="tab-btn active" id="tab-register">Create Account</button>
+          </div>
+
+          <h2 class="form-title">Join us today</h2>
+          <p class="form-subtext">
+            Create an account to start your Hirono collection.
+          </p>
+
+          <!-- Auth Form -->
+          <form class="auth-form" id="auth-form" onsubmit="handleAuthSubmit(event)">
+            <!-- Full Name (Only for Create Account) -->
+            <div class="form-group" id="group-fullname">
+              <label for="fullname">FULL NAME</label>
+              <input type="text" id="fullname" placeholder="Sophea Chan" autocomplete="off" />
+            </div>
+
+            <!-- Login Identifier (Only for Sign In) -->
+            <div class="form-group" id="group-login-id" style="display: none">
+              <label for="login-id">EMAIL OR PHONE NUMBER</label>
+              <input
+                type="text"
+                id="login-id"
+                placeholder="email@example.com or 012345678"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- Email (Only for Create Account) -->
+            <div class="form-group" id="group-email">
+              <label for="email">EMAIL ADDRESS</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="sophea@example.com"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- Phone Number & Location (Two Columns) -->
+            <div class="form-row" id="group-phone-location">
+              <div class="form-group">
+                <label for="phone">PHONE NUMBER</label>
+                <input type="tel" id="phone" placeholder="+855 12 345 678" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label for="location">LOCATION</label>
+                <input type="text" id="location" placeholder="Phnom Penh" autocomplete="off" />
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group" id="group-password">
+              <label for="password">PASSWORD</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Min. 6 characters"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- Confirm Password (Only for Create Account) -->
+            <div class="form-group" id="group-confirm-password">
+              <label for="confirm-password">CONFIRM PASSWORD</label>
+              <input
+                type="password"
+                id="confirm-password"
+                placeholder="Re-enter your password"
+                autocomplete="off"
+              />
+            </div>
+
+            <button type="submit" class="btn-submit-auth" id="btn-submit-auth" style="position: relative; z-index: 101; cursor: pointer;">Create Account</button>
+          </form>
+
+          <p class="toggle-footer" id="toggle-footer">
+            Already have an account?
+            <a href="#" id="link-switch">Sign in here</a>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- AUTH DIALOG MODAL -->
+    <div id="auth-dialog-overlay" class="dialog-overlay" style="display: none;">
+      <div class="dialog-card">
+        <div class="dialog-icon"><i class="fa-solid fa-user-plus"></i></div>
+        <h3 id="dialog-title">No Account Found</h3>
+        <p id="dialog-message">You don't have an account yet. Please create an account first to continue.</p>
+        <div class="dialog-actions">
+          <button type="button" id="dialog-btn-action" class="btn-dialog-primary">Create Account</button>
+          <button type="button" id="dialog-btn-close" class="btn-dialog-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <script src="customer-store.js"></script>
+    <script src="components.js"></script>
+    <script src="login.js"></script>
+  </body>
+</html>
