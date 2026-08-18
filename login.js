@@ -125,7 +125,7 @@ function handleAuthSubmit(event) {
 }
 
 // 1. CREATE ACCOUNT LOGIC
-function handleRegistration() {
+async function handleRegistration() {
   const fullname = document.getElementById("fullname")?.value.trim();
   const email = document.getElementById("email")?.value.trim();
   const phone = document.getElementById("phone")?.value.trim();
@@ -148,41 +148,29 @@ function handleRegistration() {
     return;
   }
 
-  const newUser = {
-    name: fullname,
-    email: email,
-    phone: phone,
-    location: location,
-    password: password,
-  };
+  try {
+    // Talks to the real Django backend (api-config.js) — accounts are now
+    // shared across every device/browser, not just the one that signed up.
+    const customer = await apiRequest("/register/", {
+      method: "POST",
+      body: JSON.stringify({ name: fullname, email, phone, location, password }),
+    });
 
-  // addCustomer() (customer-store.js) returns false if this email is
-  // already registered, so someone can't silently overwrite another
-  // account by "re-registering" with the same address.
-  const created = addCustomer(newUser);
-  if (!created) {
-    alert("An account with that email already exists. Please sign in instead.");
-    switchTab("signin");
-    return;
+    localStorage.setItem("hirono_user", JSON.stringify(customer));
+    alert("Account created successfully! Welcome to Hirono Cambodia.");
+    window.location.href = "index.html";
+  } catch (err) {
+    alert(err.message || "Couldn't create your account. Please try again.");
   }
-
-  // Keep the legacy single-user key in sync too, for any old code path
-  // that still reads it directly.
-  localStorage.setItem("hirono_registered_user", JSON.stringify(newUser));
-  localStorage.setItem("hirono_user", JSON.stringify(newUser));
-
-  alert("Account created successfully! Welcome to Hirono Cambodia.");
-  window.location.href = "index.html";
 }
 
 // 2. SIGN IN LOGIC
-// Admin credentials (demo/hardcoded — this project has no backend, so this
-// is a simple client-side gate; change ADMIN_EMAIL/ADMIN_PASSWORD below to
-// whatever you'd like the real admin login to be).
+// Admin credentials (demo/hardcoded — separate from the real Customer
+// accounts below, which now live in the Django backend).
 const ADMIN_EMAIL = "admin@hirono.com";
 const ADMIN_PASSWORD = "admin123";
 
-function handleSignIn() {
+async function handleSignIn() {
   const loginId = document
     .getElementById("login-id")
     ?.value.trim()
@@ -194,55 +182,36 @@ function handleSignIn() {
     return;
   }
 
-  // Admin sign-in — checked first since the admin account isn't part of
-  // the regular customer "hirono_registered_user" record.
+  // Admin sign-in — checked first since the admin account isn't a real
+  // Customer record.
   if (loginId === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASSWORD) {
     localStorage.setItem("hirono_admin", "true");
     window.location.href = "admin/overview.html";
     return;
   }
 
-  // Look across every registered customer (not just the last one to
-  // register) for an email or phone match.
-  const cleanLoginId = loginId.replace(/\D/g, "");
-  const allCustomers = getAllCustomers();
+  // Customer sign-in currently matches by email only (phone-number sign-in
+  // would need a matching backend lookup endpoint, which the API doesn't
+  // expose yet — enter the email you registered with).
+  try {
+    const customer = await apiRequest("/login/", {
+      method: "POST",
+      body: JSON.stringify({ email: loginId, password }),
+    });
 
-  const matchedCustomer = allCustomers.find((c) => {
-    const isEmailMatch = loginId === (c.email || "").toLowerCase();
-    const cleanCustomerPhone = (c.phone || "").replace(/\D/g, "");
-    const isPhoneMatch = cleanLoginId.length > 0 && cleanLoginId === cleanCustomerPhone;
-    return isEmailMatch || isPhoneMatch;
-  });
-
-  if (!matchedCustomer) {
-    showAuthModal(
-      "No Account Found",
-      "You don't have an account yet. Please create an account first to continue.",
-    );
-    return;
+    localStorage.setItem("hirono_user", JSON.stringify(customer));
+    alert(`Welcome back, ${customer.name || "User"}!`);
+    window.location.href = "account.html";
+  } catch (err) {
+    const message = err.message || "";
+    if (/no account/i.test(message)) {
+      showAuthModal("No Account Found", "You don't have an account yet. Please create an account first to continue.");
+    } else if (/suspended|blocked/i.test(message)) {
+      showAuthModal("Account Blocked", "This account has been blocked by an administrator. Please contact support.");
+    } else {
+      showAuthModal("Sign In Failed", "Incorrect email or password. Please try again.");
+    }
   }
-
-  if (password !== matchedCustomer.password) {
-    showAuthModal(
-      "Sign In Failed",
-      "Incorrect email/phone number or password. Please try again.",
-    );
-    return;
-  }
-
-  if (matchedCustomer.status === "blocked") {
-    showAuthModal(
-      "Account Blocked",
-      "This account has been blocked by an administrator. Please contact support.",
-    );
-    return;
-  }
-
-  // Crucial: set the active session user
-  localStorage.setItem("hirono_user", JSON.stringify(matchedCustomer));
-  localStorage.setItem("hirono_registered_user", JSON.stringify(matchedCustomer));
-  alert(`Welcome back, ${matchedCustomer.name || "User"}!`);
-  window.location.href = "account.html"; // Ensure it redirects directly to account page
 }
 
 // Helper for Modal Dialog

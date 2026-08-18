@@ -53,19 +53,23 @@ function statusBadgeStyle(status) {
   return styles[status] || styles.Pending;
 }
 
-// Populate Purchase History from localStorage
-function renderPurchaseHistory(user) {  const allOrders = JSON.parse(localStorage.getItem('hirono_orders')) || [];
-
-  // Only show orders that belong to the signed-in account — otherwise
-  // every account on this browser would see every order ever placed.
-  const currentEmail = (user && user.email ? user.email : '').toLowerCase();
-  const orders = allOrders.filter(order => order.ownerEmail && order.ownerEmail === currentEmail);
-
+// Populate Purchase History from the real backend
+async function renderPurchaseHistory(user) {
   const historyCard = document.querySelector('.account-card:nth-child(2)');
-
   if (!historyCard) return;
 
   const orderCountText = historyCard.querySelector('.sub-text');
+  let orders = [];
+
+  try {
+    const data = await apiRequest(`/orders/?customer_email=${encodeURIComponent(user.email)}`);
+    orders = data.results || data; // handles both paginated and plain-array responses
+  } catch (err) {
+    console.error('Failed to load purchase history:', err);
+    if (orderCountText) orderCountText.textContent = "Couldn't load your orders — please refresh.";
+    return;
+  }
+
   if (orderCountText) {
     orderCountText.textContent = `${orders.length} order${orders.length === 1 ? '' : 's'} placed`;
   }
@@ -78,8 +82,8 @@ function renderPurchaseHistory(user) {  const allOrders = JSON.parse(localStorag
     let ordersListHTML = '<div class="orders-list" style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">';
 
     orders.forEach((order, index) => {
-      const orderId = order.id || Math.floor(100000 + Math.random() * 900000);
       const items = Array.isArray(order.items) ? order.items : [];
+      const orderDate = order.created_at ? new Date(order.created_at).toLocaleDateString() : '';
 
       ordersListHTML += `
         <div class="order-entry" style="background: #fff8f9; border: 1px solid #ffe0e6; border-radius: 12px; overflow: hidden;">
@@ -87,12 +91,12 @@ function renderPurchaseHistory(user) {  const allOrders = JSON.parse(localStorag
             <div style="display: flex; align-items: center; gap: 12px;">
               <i class="fa-solid fa-chevron-right order-chevron" style="font-size: 0.75rem; color: #9ca3af; transition: transform 0.2s ease;"></i>
               <div>
-                <h4 style="font-weight: 700; color: #1f2937; margin: 0;">Order #${orderId}</h4>
-                <p style="font-size: 0.8rem; color: #6b7280; margin-top: 2px;">Date: ${order.date || new Date().toLocaleDateString()}</p>
+                <h4 style="font-weight: 700; color: #1f2937; margin: 0;">Order #${order.id}</h4>
+                <p style="font-size: 0.8rem; color: #6b7280; margin-top: 2px;">Date: ${orderDate}</p>
               </div>
             </div>
             <div style="text-align: right;">
-              <span style="font-weight: 800; color: #ff2b6d;">$${order.total ? order.total.toFixed(2) : '0.00'}</span>
+              <span style="font-weight: 800; color: #ff2b6d;">$${Number(order.total || 0).toFixed(2)}</span>
               <span style="display: block; font-size: 0.75rem; ${statusBadgeStyle(order.status)} padding: 2px 8px; border-radius: 10px; margin-top: 4px; font-weight: 600;">${order.status || 'Pending'}</span>
             </div>
           </button>
@@ -102,13 +106,13 @@ function renderPurchaseHistory(user) {  const allOrders = JSON.parse(localStorag
                 ? items.map(item => `
                   <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #ffeef2;">
                     <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
-                      <img src="${item.imgSrc || 'placeholder.jpg'}" alt="${item.title}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 8px; background: #f3f4f6; flex-shrink: 0;">
+                      <img src="${item.product_image || 'placeholder.jpg'}" alt="${item.product_name}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 8px; background: #f3f4f6; flex-shrink: 0;">
                       <div style="min-width: 0;">
-                        <p style="margin: 0; font-weight: 600; font-size: 0.9rem; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.title}</p>
-                        <p style="margin: 2px 0 0 0; font-size: 0.78rem; color: #9ca3af;">Qty: ${item.quantity} &times; $${(item.price || 0).toFixed(2)}</p>
+                        <p style="margin: 0; font-weight: 600; font-size: 0.9rem; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.product_name}</p>
+                        <p style="margin: 2px 0 0 0; font-size: 0.78rem; color: #9ca3af;">Qty: ${item.quantity} &times; $${Number(item.price || 0).toFixed(2)}</p>
                       </div>
                     </div>
-                    <span style="font-weight: 700; color: #1f2937; font-size: 0.9rem; flex-shrink: 0;">$${((item.price || 0) * (item.quantity || 1)).toFixed(2)}</span>
+                    <span style="font-weight: 700; color: #1f2937; font-size: 0.9rem; flex-shrink: 0;">$${(Number(item.price || 0) * (item.quantity || 1)).toFixed(2)}</span>
                   </div>
                 `).join('')
                 : `<p style="padding-top: 12px; color: #9ca3af; font-size: 0.85rem;">No item details available for this order.</p>`
@@ -161,33 +165,30 @@ function initEditProfileModal(userData) {
   });
 
   // Save Changes
-  editForm?.addEventListener('submit', (e) => {
+  editForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Update object
-    userData.name = editFullNameInput.value.trim();
-    userData.phone = editPhoneInput.value.trim();
-    userData.location = editLocationInput.value.trim();
+    const name = editFullNameInput.value.trim();
+    const phone = editPhoneInput.value.trim();
+    const location = editLocationInput.value.trim();
 
-    // Update localStorage
-    localStorage.setItem('hirono_user', JSON.stringify(userData));
-    localStorage.setItem('hirono_registered_user', JSON.stringify(userData));
-
-    // Keep the master customer list (read by admin/customermanagement.html) in sync
-    if (typeof updateCustomerByEmail === 'function' && userData.email) {
-      updateCustomerByEmail(userData.email, {
-        name: userData.name,
-        phone: userData.phone,
-        location: userData.location,
+    try {
+      const updated = await apiRequest(`/customers/${userData.id}/`, {
+        method: 'PATCH',
+        body: JSON.stringify({ name, phone, location }),
       });
+
+      // Update in-memory + session copy with the server's confirmed values
+      Object.assign(userData, updated);
+      localStorage.setItem('hirono_user', JSON.stringify(userData));
+
+      renderProfileData(userData);
+      if (typeof renderUserAuth === 'function') renderUserAuth(); // Refresh navbar profile name
+
+      if (modal) modal.style.display = 'none';
+      alert('Profile updated successfully!');
+    } catch (err) {
+      alert(err.message || "Couldn't update your profile. Please try again.");
     }
-
-    // Re-render UI
-    renderProfileData(userData);
-    if (typeof renderUserAuth === 'function') renderUserAuth(); // Refresh navbar profile name
-
-    // Close Modal
-    if (modal) modal.style.display = 'none';
-    alert('Profile updated successfully!');
   });
 }

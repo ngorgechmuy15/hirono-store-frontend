@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------------------------------
   // RECEIPT MODAL LOGIC
   // --------------------------------------------------
-  function processCheckoutAndShowReceipt() {
+  async function processCheckoutAndShowReceipt() {
     // Read selected options
     const paymentSelected = getSelectedPayment();
     const deliverySelected = getSelectedDelivery();
@@ -411,6 +411,33 @@ document.addEventListener("DOMContentLoaded", () => {
     // VET / J&T need somewhere + someone to deliver to; Pick up doesn't
     if (deliverySelected !== "Pick up" && (!deliveryLocation || !deliveryPhone)) {
       alert("Please enter your delivery location and phone number to continue.");
+      return;
+    }
+
+    // Must be signed in to actually place an order (checkout is gated by
+    // the same isUserLoggedIn() check as Add to Cart elsewhere on the site)
+    const currentUserStr = localStorage.getItem("hirono_user");
+    const currentUser = currentUserStr ? JSON.parse(currentUserStr) : null;
+    if (!currentUser || !currentUser.id) {
+      alert("Please sign in to complete checkout.");
+      return;
+    }
+
+    // Record this purchase in the real backend so it shows up under
+    // "Purchase History" on account.html AND the admin Orders dashboard —
+    // both now read from the same shared database instead of this
+    // browser's own localStorage.
+    let savedOrder;
+    try {
+      savedOrder = await saveOrderToHistory(currentUser, paymentSelected, deliverySelected, {
+        subtotal,
+        deliveryFee,
+        grandTotal,
+        deliveryLocation: deliverySelected !== "Pick up" ? deliveryLocation : "",
+        deliveryPhone: deliverySelected !== "Pick up" ? deliveryPhone : ""
+      });
+    } catch (err) {
+      alert(err.message || "Couldn't complete checkout. Please try again.");
       return;
     }
 
@@ -455,16 +482,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (receiptTotal) receiptTotal.innerText = `$${grandTotal.toFixed(2)}`;
 
-    // Record this purchase so it shows up under "Purchase History" on
-    // account.html (account.js already reads from "hirono_orders").
-    saveOrderToHistory(paymentSelected, deliverySelected, {
-      subtotal,
-      deliveryFee,
-      grandTotal,
-      deliveryLocation: deliverySelected !== "Pick up" ? deliveryLocation : "",
-      deliveryPhone: deliverySelected !== "Pick up" ? deliveryPhone : ""
-    });
-
     // Reset delivery fields for next time
     if (deliveryLocationInput) deliveryLocationInput.value = "";
     if (deliveryPhoneInput) deliveryPhoneInput.value = "";
@@ -475,42 +492,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --------------------------------------------------
-  // PURCHASE HISTORY (read by account.js)
+  // PURCHASE HISTORY — now saved to the real Django backend (POST
+  // /api/orders/) instead of this browser's own localStorage, so both the
+  // customer's account page and the admin dashboard see the same order
+  // regardless of which device placed it.
   // --------------------------------------------------
-  function saveOrderToHistory(payment, delivery, breakdown) {
-    const orders = JSON.parse(localStorage.getItem("hirono_orders")) || [];
-
-    // Tag the order with whichever account is signed in right now, so
-    // account.html can show each user only *their own* orders instead of
-    // every order ever placed on this browser.
-    const currentUserStr = localStorage.getItem("hirono_user");
-    const currentUser = currentUserStr ? JSON.parse(currentUserStr) : null;
-    const ownerEmail = currentUser && currentUser.email ? currentUser.email.toLowerCase() : null;
-
-    orders.unshift({
-      id: Math.floor(100000 + Math.random() * 900000),
-      date: new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      }),
-      status: "Pending", // updated by admin in admin/orders.html
-      total: breakdown.grandTotal, // the actual charged amount, incl. delivery fee
-      subtotal: breakdown.subtotal,
-      deliveryFee: breakdown.deliveryFee,
-      deliveryLocation: breakdown.deliveryLocation,
-      deliveryPhone: breakdown.deliveryPhone,
-      payment,
-      delivery,
-      ownerEmail,
-      items: cart.map(item => ({
-        title: item.title,
-        quantity: item.quantity,
-        price: item.price,
-        imgSrc: item.imgSrc
-      }))
+  async function saveOrderToHistory(currentUser, payment, delivery, breakdown) {
+    return apiRequest("/orders/", {
+      method: "POST",
+      body: JSON.stringify({
+        customer: currentUser.id,
+        subtotal: breakdown.subtotal,
+        delivery_fee: breakdown.deliveryFee,
+        total: breakdown.grandTotal,
+        payment_method: payment,
+        delivery_method: delivery,
+        delivery_location: breakdown.deliveryLocation,
+        delivery_phone: breakdown.deliveryPhone,
+        items: cart.map(item => ({
+          product: null, // storefront cart items aren't tied to a backend product id
+          product_name: item.title,
+          product_image: item.imgSrc || "",
+          price: item.price,
+          quantity: item.quantity
+        }))
+      })
     });
-
-    localStorage.setItem("hirono_orders", JSON.stringify(orders));
   }
 });

@@ -1,35 +1,31 @@
 /* ==========================================================================
    ADMIN — ORDERS (orders.js)
-   Reads the orders cart.js already saves to localStorage ("hirono_orders")
-   on checkout. Lets admin update each order's status; account.js reads
-   that same status back so customers see it reflected in their history.
+   Reads/writes orders through the real Django backend (api-config.js) so
+   every order placed on any device shows up here, and status changes made
+   here are reflected back on the customer's account.html purchase history.
    ========================================================================== */
 
-const ORDER_STATUSES = ["Pending", "Processing", "Shipped", "Completed", "Cancelled"];
+const ORDER_STATUSES = ["Pending", "Processing", "Completed", "Cancelled"];
 
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.getElementById("orders-table-body");
   const subtitle = document.getElementById("orders-subtitle");
 
-  renderTable();
+  loadOrders();
 
-  function getOrders() {
-    const stored = localStorage.getItem("hirono_orders");
-    if (!stored) return [];
+  async function loadOrders() {
+    tableBody.innerHTML = `<tr><td colspan="7" class="no-data">Loading orders…</td></tr>`;
     try {
-      const parsed = JSON.parse(stored);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      return [];
+      const data = await apiRequest("/orders/");
+      const orders = data.results || data;
+      renderTable(orders);
+    } catch (err) {
+      console.error("Failed to load orders:", err);
+      tableBody.innerHTML = `<tr><td colspan="7" class="no-data">Couldn't load orders — check that the backend is reachable, then refresh.</td></tr>`;
     }
   }
 
-  function saveOrders(orders) {
-    localStorage.setItem("hirono_orders", JSON.stringify(orders));
-  }
-
-  function renderTable() {
-    const orders = getOrders();
+  function renderTable(orders) {
     subtitle.textContent = `${orders.length} total order${orders.length === 1 ? "" : "s"}`;
 
     if (orders.length === 0) {
@@ -40,14 +36,20 @@ document.addEventListener("DOMContentLoaded", () => {
     tableBody.innerHTML = orders.map((o) => renderRow(o)).join("");
 
     tableBody.querySelectorAll("[data-action='status-change']").forEach((select) => {
-      select.addEventListener("change", () => {
+      select.addEventListener("change", async () => {
         const orderId = select.dataset.id;
-        const orders = getOrders();
-        const idx = orders.findIndex((o) => String(o.id) === String(orderId));
-        if (idx === -1) return;
-        orders[idx].status = select.value;
-        saveOrders(orders);
-        renderTable();
+        const newStatus = select.value;
+        select.disabled = true;
+        try {
+          await apiRequest(`/orders/${orderId}/`, {
+            method: "PATCH",
+            body: JSON.stringify({ status: newStatus }),
+          });
+          loadOrders(); // re-render with the confirmed server state (and refreshed badge)
+        } catch (err) {
+          alert(err.message || "Couldn't update order status.");
+          select.disabled = false;
+        }
       });
     });
   }
@@ -62,10 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return `
       <tr>
         <td class="data-cell font-bold">#${escapeHtml(order.id)}</td>
-        <td class="data-cell text-muted">${escapeHtml(order.ownerEmail || "Guest")}</td>
+        <td class="data-cell text-muted">${escapeHtml(order.customer_email || "Guest")}</td>
         <td class="data-cell font-bold">$${Number(order.total || 0).toFixed(2)}</td>
-        <td class="data-cell text-muted">${escapeHtml(order.payment || "—")}</td>
-        <td class="data-cell text-muted">${escapeHtml(order.delivery || "—")}</td>
+        <td class="data-cell text-muted">${escapeHtml(order.payment_method || "—")}</td>
+        <td class="data-cell text-muted">${escapeHtml(order.delivery_method || "—")}</td>
         <td class="data-cell"><span class="badge ${badgeClass}">${escapeHtml(status.toUpperCase())}</span></td>
         <td class="data-cell">
           <select class="status-select" data-action="status-change" data-id="${escapeAttr(order.id)}">
