@@ -28,37 +28,64 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 
   function init() {
-    loadStoreProducts();
-    setupEventListeners();
-    applyFiltersAndSort();
+    loadStoreProducts().then(() => {
+      setupEventListeners();
+      applyFiltersAndSort();
+    });
   }
 
   // --------------------------------------------------
-  // LOAD PRODUCTS FROM THE SHARED STORE (product-store.js)
-  // Only products the admin has left visible show up here — this is what
-  // lets the admin dashboard control what actually appears on the site.
+  // LOAD PRODUCTS FROM THE REAL BACKEND (api-config.js)
+  // Only products the admin has left visible show up here (the API's
+  // default filter for GET /products/) — this is what lets the admin
+  // dashboard control what actually appears on the site, for every
+  // visitor, on any device.
   // --------------------------------------------------
-  function loadStoreProducts() {
-    const storeProducts = getVisibleProducts();
+  async function loadStoreProducts() {
+    let storeProducts = [];
+    try {
+      const data = await apiRequest("/products/?page_size=500");
+      storeProducts = data.results || data;
+    } catch (err) {
+      console.error("Failed to load products from the backend:", err);
+      if (itemsCountText) itemsCountText.innerText = "Couldn't load products — please refresh.";
+      return;
+    }
 
     allProducts = storeProducts.map((product) => {
       const badges = [];
-      if (product.isComingSoon) badges.push("COMING SOON");
-      if (product.isNew) badges.push("NEW");
-      if (product.isPopular) badges.push("POPULAR");
-      if (product.isLimited) badges.push("LIMITED");
+      if (product.is_coming_soon) badges.push("COMING SOON");
+      if (product.is_new) badges.push("NEW");
+      if (product.is_popular) badges.push("POPULAR");
+      if (product.is_limited) badges.push("LIMITED");
+
+      // renderProductCardHTML() (product-store.js) expects the old
+      // localStorage field names, so map the API's response into that
+      // shape rather than rewriting the shared card template.
+      const cardShapeProduct = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category_name,
+        series: product.series_name,
+        isComingSoon: Boolean(product.is_coming_soon),
+        isNew: Boolean(product.is_new),
+        isPopular: Boolean(product.is_popular),
+        isLimited: Boolean(product.is_limited),
+      };
 
       return {
         id: product.id,
         title: product.name,
         price: Number(product.price) || 0,
         priceText: `$${Number(product.price).toFixed(2)}`,
-        category: product.category,
-        series: product.series,
+        category: product.category_name,
+        series: product.series_name,
         imgSrc: product.image,
         badges,
-        isNewArrival: Boolean(product.isNew),
-        originalHTML: renderProductCardHTML(product), // built from the store, not scraped DOM
+        isNewArrival: Boolean(product.is_new),
+        originalHTML: renderProductCardHTML(cardShapeProduct),
       };
     });
 

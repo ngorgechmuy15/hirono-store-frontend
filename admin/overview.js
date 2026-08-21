@@ -11,7 +11,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const metricCustomers = document.getElementById("metric-customers");
   const recentBody = document.getElementById("recent-purchases-body");
 
-  const products = typeof getAllProducts === "function" ? getAllProducts() : [];
+  let products = [];
+  try {
+    const productsData = await apiRequest("/products/?all=true&page_size=500");
+    products = productsData.results || productsData;
+  } catch (err) {
+    console.error("Failed to load products:", err);
+  }
   metricProducts.textContent = products.length;
 
   let orders = [];
